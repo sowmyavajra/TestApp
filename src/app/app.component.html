@@ -1,0 +1,13 @@
+<app-header></app-header>
+<router-outlet></router-outlet>
+<div class="my-container">
+  <ng-template #customLoadingTemplate>
+    <div class="custom-class">
+      <h1 class="h3">
+        Loading...
+      </h1>
+    </div>
+  </ng-template>
+  <ngx-loading [show]="_loading" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<app-footer></app-footer>

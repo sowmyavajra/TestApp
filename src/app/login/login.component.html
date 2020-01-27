@@ -1,0 +1,54 @@
+<div class="custom-field-validation text-center" *ngIf="_errorDetails?.length">
+  <ul class="alert alert-danger nav">
+    <li class="field-validation-error" *ngFor='let item of _errorDetails'>
+      {{item}}
+    </li>
+  </ul>
+</div>
+<section>
+  <div class="container home-info">
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <h2 style="color: rosybrown;text-align: center;">Secure Login</h2>
+        <div class="login-box" style="align-items: center;">
+          <form class="form-horizontal" #LoginForm="ngForm" novalidate>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <label for="Email">Email</label>
+                <input class="form-control" type="text" maxlength="64" required #Email="ngModel" name="Email"
+                  [(ngModel)]="_login.Email" placeholder="Email"
+                  pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$">
+                <div class="field-validation-error" style="color: red;" *ngIf="Email.errors?.required && Email.touched">
+                  Email is required</div>
+                <div class="field-validation-error" style="color: red;" *ngIf="Email.errors?.pattern"> Email is invalid
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <label for="password" class="col-sm-3 col-form-label">Password</label>
+                <input class="form-control" type="password" maxlength="20" required #Password="ngModel" name="password"
+                  [(ngModel)]="_login.Password" placeholder="password">
+                <div class="field-validation-error" style="color: red;"
+                  *ngIf="Password.errors?.required && Password.touched">Password is required</div>
+                <!-- <a id="ForgotPassword" class="form-control-static"><a tabindex="0" (keyup.enter)="OpenForgotPasswordModal()" (click)="OpenForgotPasswordModal()">Forgot Password?</a></p> -->
+              </div>
+            </div>
+            <p class="text-center"><button type="submit" class="btn btn-primary"
+                (click)="SecureLogin(LoginForm)">Login</button></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="my-container">
+  <ng-template #customLoadingTemplate>
+    <div class="custom-class">
+      <h1 class="h3">
+        Loading...
+      </h1>
+    </div>
+  </ng-template>
+  <ngx-loading [show]="_loading" [template]="customLoadingTemplate"></ngx-loading>
+</div>
