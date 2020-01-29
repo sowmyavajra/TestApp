@@ -30,7 +30,7 @@
                 <input class="form-control" type="password" maxlength="20" required #Password="ngModel" name="password"
                   [(ngModel)]="_login.Password" placeholder="password">
                 <div class="field-validation-error" style="color: red;"
-                  *ngIf="Password.errors?.required && Password.touched">Password is required.</div>
+                  *ngIf="Password.errors?.required && Password.touched">Password is required </div>
                 <!-- <a id="ForgotPassword" class="form-control-static"><a tabindex="0" (keyup.enter)="OpenForgotPasswordModal()" (click)="OpenForgotPasswordModal()">Forgot Password?</a></p> -->
               </div>
             </div>
