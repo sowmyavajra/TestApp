@@ -53,7 +53,7 @@ debugger;
             //    this.jwtService.SaveToken(event.body.AccessToken);
             //  }
             //}
-            debugger;
+           
             console.log("api call success :", event);
           }
         },
