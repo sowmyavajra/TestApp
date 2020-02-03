@@ -8,9 +8,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  post(path: string, body: any): Promise<any> {
-    
-    return this.http.post<any>(path, body).toPromise();
-    
+  post(path: string, body: any): Promise<any> {    
+    return this.http.post<any>(path, body).toPromise();    
   }   
 }

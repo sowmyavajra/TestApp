@@ -59,7 +59,6 @@ export class Service {
   GetToken(): string {
     return window.localStorage['jwtToken'];
   }
-
   SaveToken(token: string) {
     window.localStorage['jwtToken'] = token;
   }

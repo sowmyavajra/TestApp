@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
   Save(form: any): boolean {
     if (!form.valid) {
       this.service.ValidateAllFormFields(form);
-      // this._displayError = true;
       this._loading = false;
       return false;
 

@@ -18,8 +18,7 @@ import { HTTP_INTERCEPTORS,HttpClientModule } from '@angular/common/http';
       HeaderComponent,      
       FooterComponent,
       LoginComponent,
-      MemberInfoComponent
-     
+      MemberInfoComponent     
    ],
    imports:[
       BrowserModule,
