@@ -9,6 +9,8 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { LoginComponent } from './login/login.component';
 import{FormsModule} from '@angular/forms';
 import { MemberInfoComponent } from './home/member-info/member-info.component';
+import { HttpRequestResponseInterceptor } from './common/http-request-response-interceptor';
+import { HTTP_INTERCEPTORS,HttpClientModule } from '@angular/common/http';
 
 @NgModule({
    declarations: [
@@ -23,6 +25,7 @@ import { MemberInfoComponent } from './home/member-info/member-info.component';
       BrowserModule,
       FormsModule,
       AppRoutingModule,
+      HttpClientModule,
       NgxLoadingModule.forRoot({
          animationType: ngxLoadingAnimationTypes.wanderingCubes,
          backdropBackgroundColour: 'rgba(0,0,0,0.1)',
@@ -32,7 +35,7 @@ import { MemberInfoComponent } from './home/member-info/member-info.component';
          tertiaryColour: '#ffffff'
        })
   ],
-  providers: [],
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: HttpRequestResponseInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

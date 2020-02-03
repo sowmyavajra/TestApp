@@ -1,9 +1,13 @@
 import { Injectable, DebugElement } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Login } from './models';
+import { ApiService } from './apiservice';
+
 @Injectable({
     providedIn: 'root'
   })
 export class Service {
+   constructor(private apiService: ApiService){}
     //Validate Form elements on submit
   ValidateAllFormFields(form: any) {
     var controls = form.controls;
@@ -42,5 +46,28 @@ export class Service {
         break;
       }
     }
+  }
+  //Login API call.
+  async Login(data:Login) {
+    console.log("Querying");
+    debugger;
+    var result= this.apiService.post("http://cloudtech51/localhost:57777/identity/login", data); 
+    debugger;
+    console.log(result);
+    return result;
+  }
+  GetToken(): string {
+    return window.localStorage['jwtToken'];
+  }
+
+  SaveToken(token: string) {
+    window.localStorage['jwtToken'] = token;
+  }
+
+  DestroyToken() {
+    window.localStorage.removeItem('jwtToken');
+  }
+  SaveUserFullName(userFullName: string) {
+    window.localStorage['UserFullName'] = userFullName;
   }
 }
