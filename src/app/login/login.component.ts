@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Login } from '../common/models';
 import { Router } from '@angular/router';
 import { Service } from '../common/service';
+import { AlertifyService } from '../common/alertify.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   _loading = false;
   _login : Login = new Login();
   _errorDetails: Array<string>=new Array();
-  constructor(private router: Router, private service: Service
+  constructor(private router: Router, private service: Service, private alertify: AlertifyService
   ) { }
 
   ngOnInit() {
@@ -43,18 +44,18 @@ export class LoginComponent implements OnInit {
       success => {
         debugger;
         if (success["Success"] == "false") {
-          console.log("Error occured");
+          this.alertify.warning("login failed");
           this._errorDetails.push("Error Occured");
           this._loading = false;
         }
-        else if (success["Success"] == "true") {
-          console.log("login successfull.");
+        else if (success["Success"] == "true") {          
+          this.alertify.success("login successfull.");
           this.router.navigate(['/member-info']);
           this._loading = false;
         }
       },
       error => {      
-        console.log(error);
+               this.alertify.error(error);
         this._loading = false;
       },
     )

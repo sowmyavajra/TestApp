@@ -51,7 +51,7 @@ export class Service {
   async Login(data:Login) {
     console.log("Querying");
     debugger;
-    var result= this.apiService.post("http://cloudtech51/localhost:57777/identity/login", data); 
+    var result= this.apiService.post("http://localhost:57777/identity/login", data); 
     debugger;
     console.log(result);
     return result;

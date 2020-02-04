@@ -29,7 +29,7 @@ export class HttpRequestResponseInterceptor implements HttpInterceptor {
     //  headersConfig['Authorization'] = `Bearer ${token}`;
     //}
     //let gUID = this.userService.GetUserGUID();
-    headersConfig['Referrer'] =  " : API called from Member Portal : " + this.router.url.substring(1) + " component";
+    headersConfig['Referrer'] =  " : API called from Payment Portal : " + this.router.url.substring(1) + " component";
 debugger;
     const request = req.clone({ setHeaders: headersConfig });
     //let logout = '/logout';
