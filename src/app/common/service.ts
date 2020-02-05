@@ -1,12 +1,13 @@
 import { Injectable, DebugElement } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Login } from './models';
+import { Login, Register, FormDataModel } from './models';
 import { ApiService } from './apiservice';
 
 @Injectable({
     providedIn: 'root'
   })
 export class Service {
+  private _formData:FormDataModel=new FormDataModel();
    constructor(private apiService: ApiService){}
     //Validate Form elements on submit
   ValidateAllFormFields(form: any) {
@@ -68,5 +69,12 @@ export class Service {
   }
   SaveUserFullName(userFullName: string) {
     window.localStorage['UserFullName'] = userFullName;
+  }
+  SaveRegisterDetails(data:Register){
+    debugger;
+this._formData.Register=data;
+  }
+  GetRegisterDetails(){
+    return this._formData.Register;
   }
 }

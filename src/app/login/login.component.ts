@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+  this._login=this.service.GetRegisterDetails();
   }
   Save(form: any): boolean {
     if (!form.valid) {
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
         }
         else if (success["Success"] == "true") {          
           this.alertify.success("login successfull.");
-          this.router.navigate(['/member-info']);
+          this.router.navigate(['/payment-info']);
           this._loading = false;
         }
       },

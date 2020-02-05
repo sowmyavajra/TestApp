@@ -1,0 +1,132 @@
+<section class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          
+          <!-- <ul class="breadcrumb">            
+            <li><a class="cursor-pointer" tabindex="0">Payment Information</a></li>
+          </ul> -->
+        </div>
+        <div class="col-sm-8 col-sm-offset-2">
+          <div class="login-box">
+            <div class="row">
+              <div class="col-sm-12">
+                <h2 class="h3 text-center">Payment Information</h2>
+                <form class="form-horizontal" #PaymentInformationForm="ngForm" novalidate>
+                  <div class="form-group">
+                    <label class="col-sm-3">Payment Type</label>
+                    <div class="btn-group col-sm-9" data-toggle="buttons">
+                      <label for="Card" class="btn btn-radio active" [ngClass]="{ 'active':_activeTab==='B'}" (click)="Activeclick('B')">
+                        <input id="Card" name="PaymentType" #PaymentType="ngModel" [(ngModel)]="_payment.PaymentType" value="B" type="radio" onRadioElmntFocus> Card
+                      </label>
+                      <label for="Draft" class="btn btn-radio" [ngClass]="{ 'active':_activeTab==='D'}" (click)="Activeclick('D')">
+                        <input id="Draft" name="PaymentType" #PaymentType="ngModel" [(ngModel)]="_payment.PaymentType" value="D" type="radio" onRadioElmntFocus> Bank Draft
+                      </label>
+                    </div>
+                  </div>
+                  <div id="card" *ngIf="_activeTab=='B'" style="display: block;">
+                    <div class="form-group">
+                      <div class="col-sm-6">
+                        <label for="">Name on Card</label>
+                        <input  id="CardHolderName" type="text" class="form-control" name="CardHolderName" #CardHolderName="ngModel" [(ngModel)]="_payment.CardPaymentDetails.CardHolderName" maxlength="64" pattern="^[a-z A-Z *'.,]+(^.)?[\s]*$" appAutofocus  required>
+                        <div class="field-validation-error" style="color:crimson" *ngIf="CardHolderName.errors?.required && CardHolderName.touched && _displayErrorForPaymentMethod==true">Error: Name on Card is required.</div>
+                        <div class="field-validation-error" style="color:crimson" *ngIf="CardHolderName.errors?.pattern && _displayErrorForPaymentMethod==true">Error: Name on Card is not in correct format.</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <label for="CardType">Credit Card Type</label>
+                        <select  id="CardType" class="form-control" name="CardType" #CardType="ngModel" [(ngModel)]="_payment.CardPaymentDetails.CardType" required>
+                          <option value="">Card Type</option>
+                          <option *ngFor='let items of _cardTypes' value={{items.CardType}}>{{items.Description}}</option>
+                        </select>
+                        <div id="CardTypeRequired-Error" class="field-validation-error" style="color:crimson" *ngIf="CardType.errors?.required && CardType.touched && _displayErrorForPaymentMethod==true">Error: Credit Card Type is required.</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-6">
+                        <label for="CardNumber">Card Number</label>
+                        <input  id="CardNumber" type="text" class="form-control" name="CardNumber" #CardNumber="ngModel" [(ngModel)]="_payment.CardPaymentDetails.CardNumber" maxlength="16" pattern="^(\d{13,16})$" required>
+                        <div  class="field-validation-error" style="color:rgb(228, 0, 46)" *ngIf="CardNumber.errors?.required && CardNumber.touched && _displayErrorForPaymentMethod==true">Error: Card Number is required.</div>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="CardNumber.errors?.pattern && _displayErrorForPaymentMethod==true">Error: Card Number is not in correct format.</div>
+                      </div>
+                      <div class="col-sm-3">
+                        <label for="CardExpiryMonth">Expiration Date</label>
+                        <select  id="CardExpiryMonth" class="form-control" name="CardExpiryMonth" #CardExpiryMonth="ngModel" [(ngModel)]="_payment.CardPaymentDetails.CardExpMonth" required>
+                          <option value="">Month</option>
+                          <option *ngFor='let item of _cardExpiryMonths' value={{item.Expiry}}>{{item.Expiry}}</option>
+                        </select>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="CardExpiryMonth.errors?.required && CardExpiryMonth.touched && _displayErrorForPaymentMethod==true">Error: Expiration Month is required.</div>
+                      </div>
+                      <div class="col-sm-3">
+                        <label for="CardExpiryYear">&nbsp;</label>
+                        <select  id="CardExpiryYear" class="form-control" name="CardExpiryYear" #CardExpiryYear="ngModel" [(ngModel)]="_payment.CardPaymentDetails.CardExpYear" required (change)="GenerateExpiryData($event.target.value)">
+                          <option value="">Year</option>
+                          <option *ngFor='let item of _cardExpiryYears' value={{item.Expiry}}>{{item.Expiry}}</option>
+                        </select>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="CardExpiryYear.errors?.required && CardExpiryYear.touched && _displayErrorForPaymentMethod==true">Error: Expiration Year is required.</div>
+                      </div>
+                    </div>
+                    <p class="text-center">
+                      <button type="submit" class="btn btn-primary" (click)="SavePaymentInfo(PaymentInformationForm)">Save</button>
+                    </p>
+                  </div>
+                  <div *ngIf="_activeTab=='D'" style="display: block;" id="bank">
+                    <div class="form-group">
+                      <div class="col-sm-6">
+                        <label for="NameOnAccount">Name on Account</label>
+                        <input  id="NameOnAccount" type="text" class="form-control" name="NameOnAccount" #NameOnAccount="ngModel" [(ngModel)]="_payment.BankDraftDetails.NameOnAccount" maxlength="64" pattern="^[a-z A-Z *%'.,]+(^.)?[\s]*$"  required>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="NameOnAccount.errors?.required && NameOnAccount.touched && _displayErrorForPaymentMethod==true">Error: Name On Account is required.</div>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="NameOnAccount.errors?.pattern && _displayErrorForPaymentMethod==true">Error: Name On Account is not in correct format.</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <label for="BankName">Bank Name</label>
+                        <input  id="BankName" type="text" class="form-control" name="BankName" #BankName="ngModel" [(ngModel)]="_payment.BankDraftDetails.BankName" maxlength="64" pattern="^[a-z A-Z 0-9, '\-&]+(^.)?[\s]*$" required>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="BankName.errors?.required && BankName.touched && _displayErrorForPaymentMethod==true">Error: Bank Name is required.</div>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="BankName.errors?.pattern && _displayErrorForPaymentMethod==true">Error: Bank Name is not in correct format.</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-6">
+                        <!-- <tooltip-content #routingNumberToolTip [animation]="true" placement="left">
+                          <img class='img-responsive' src='./assets/images/bank-routing.png' alt="Routing number location on check" />
+                        </tooltip-content> -->
+                        <label for="RoutingNumber">9 Digit ABA Code / Routing Number<span aria-describedby="paymentBankDraft" tooltipPlacement="bottom"><a href="#" role="tooltip" id="paymentBankDraft" style="text-decoration:none" class="glyphicon glyphicon-question-sign custom-hand"></a></span></label>
+                        <input  id="RoutingNumber" type="text" class="form-control" name="RoutingNumber" #RoutingNumber="ngModel" [(ngModel)]="_payment.BankDraftDetails.RoutingNumber" maxlength="9" pattern="^[0-9]{9,}$" required>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="RoutingNumber.errors?.required && RoutingNumber.touched && _displayErrorForPaymentMethod==true">Error: Routing Number is required.</div>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="RoutingNumber.errors?.pattern && _displayErrorForPaymentMethod==true">Error: Routing Number is not in correct format.</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <!-- <tooltip-content #accountNumberToolTip [animation]="true" placement="left">
+                          <img class='img-responsive' src='./assets/images/bank-account.png' alt="Account number location on check" />
+                        </tooltip-content> -->
+                        <label for="AccountNumber">Account Number <span aria-describedby="paymentBankCard"  tooltipPlacement="bottom"><a href="#" role="tooltip" id="paymentBankCard" style="text-decoration:none" class="glyphicon glyphicon-question-sign custom-hand"></a></span></label>
+                        <input  id="AccountNumber" type="text" class="form-control" name="AccountNumber" #AccountNumber="ngModel" [(ngModel)]="_payment.BankDraftDetails.AccountNumber" maxlength="20" pattern="^[a-zA-Z0-9]{5,}$" required>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="AccountNumber.errors?.required && AccountNumber.touched && _displayErrorForPaymentMethod==true">Error: Account Number is required.</div>
+                        <div  class="field-validation-error" style="color:crimson" *ngIf="AccountNumber.errors?.pattern && _displayErrorForPaymentMethod==true">Error: Account Number is not in correct format.</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3" for="Blank1">Account Type</label>
+                      <div class="btn-group col-sm-9" data-toggle="buttons">
+                        <label for="Checking" class="btn btn-radio active" [ngClass]="{ 'active':_activeAccountTypeTab==='C'}" (click)="ActiveAccountTypeclick('C')">
+                          <input aria-describedby="AccountType-Error" id="Checking" name="AccountType" #AccountType="ngModel" [(ngModel)]="_payment.BankDraftDetails.AccountType" value="C" type="radio" required onRadioElmntFocus> Checking
+                        </label>
+                        <label for="Savings" class="btn btn-radio" [ngClass]="{ 'active':_activeAccountTypeTab==='S'}" (click)="ActiveAccountTypeclick('S')">
+                          <input id="Savings" name="AccountType" #AccountType="ngModel" [(ngModel)]="_payment.BankDraftDetails.AccountType" value="S" type="radio" required onRadioElmntFocus> Savings
+                        </label>
+                      </div>
+                      <div id="AccountType-Error" class="field-validation-error col-sm-offset-3 col-xs-offset-2" style="color:crimson" *ngIf="AccountType.errors?.required && AccountType.touched && _displayErrorForPaymentMethod==true">Error: Account Type is required.</div>
+                    </div>
+                    <hr>
+                    <p class="text-center">
+                      <button type="button" class="btn btn-primary" (click)="GoToLogin()">Cancel</button>&nbsp;
+                      <button type="submit" class="btn btn-primary" (click)="SavePaymentInfo(PaymentInformationForm)">Save</button>
+                    </p>
+                  </div>  
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

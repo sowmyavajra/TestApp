@@ -11,16 +11,20 @@ import{FormsModule} from '@angular/forms';
 import { MemberInfoComponent } from './home/member-info/member-info.component';
 import { HttpRequestResponseInterceptor } from './common/http-request-response-interceptor';
 import { HTTP_INTERCEPTORS,HttpClientModule } from '@angular/common/http';
+import { PaymentinfoComponent } from './home/payment/paymentinfo.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      HeaderComponent,      
+      HeaderComponent,
       FooterComponent,
       LoginComponent,
-      MemberInfoComponent     
+      MemberInfoComponent,
+      PaymentinfoComponent,
+      RegisterComponent
    ],
-   imports:[
+   imports: [
       BrowserModule,
       FormsModule,
       AppRoutingModule,
@@ -32,7 +36,7 @@ import { HTTP_INTERCEPTORS,HttpClientModule } from '@angular/common/http';
          primaryColour: '#7D3F98',
          secondaryColour: '#d20962',
          tertiaryColour: '#ffffff'
-       })
+       }),
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: HttpRequestResponseInterceptor, multi: true },],
   bootstrap: [AppComponent]
