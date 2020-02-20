@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Register } from '../common/models';
 import { Service } from '../common/service';
 import { Router } from '@angular/router';
+import { CommonService } from '../common/common.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,8 @@ export class RegisterComponent implements OnInit {
   _disableLink:boolean=true;
   constructor(private service:Service,private router:Router) { }
 
-  ngOnInit() {
+  ngOnInit() {    
+    debugger;
   }
 
   OpenRegsterForm(){

@@ -84,3 +84,7 @@ br {
 .btn-bottomindent {
 margin-bottom:10px;
 }
+
+.mat-tab-body-content {
+    overflow: hidden !important;
+}

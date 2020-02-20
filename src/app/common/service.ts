@@ -1,14 +1,15 @@
 import { Injectable, DebugElement } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Login, Register, FormDataModel } from './models';
+import { Login, Register, FormDataModel,BillingAddress } from './models';
 import { ApiService } from './apiservice';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
     providedIn: 'root'
   })
 export class Service {
   private _formData:FormDataModel=new FormDataModel();
-   constructor(private apiService: ApiService){}
+   constructor(private apiService: ApiService,private datePipe :DatePipe){}
     //Validate Form elements on submit
   ValidateAllFormFields(form: any) {
     var controls = form.controls;
@@ -48,6 +49,15 @@ export class Service {
       }
     }
   }
+  //Check if date is valid
+  IsDateValid(value): boolean {
+    let date = new Date(value);
+    if (date.toString() != "Invalid Date") {
+      let formattedDate = this.datePipe.transform(date, 'MM/dd/yyyy');
+      return value == formattedDate;
+    }
+    return false;
+  }
   //Login API call.
   async Login(data:Login) {
     console.log("Querying");
@@ -76,5 +86,21 @@ this._formData.Register=data;
   }
   GetRegisterDetails(){
     return this._formData.Register;
+  }
+
+  //Billng aaddress API call
+  //ForgotUserName API call.
+  async BillningAddress(data: BillingAddress) {
+    let BillningAddressObject = Object.assign({}, data);
+    // forgotUserNameObject.DOB = forgotUserNameObject.DateDOBForAPIConverted;
+    console.log("Querying");
+    //return this.apiService.post(ConfigurationManagerService.settings.BaseURL + ConfigurationManagerService.settings.ForgotUserNameURL, forgotUserNameObject);
+    return this.apiService.post("http://localhost:57777/identity/login", BillningAddressObject);
+  }
+  // On Tab press of last element in modal, focus to 1st element provided in id parameter.
+  FocusToFirstElementInModal(event: Event, id: string) {
+    event.preventDefault();
+    var el = document.getElementById(id);
+    el.focus();
   }
 }

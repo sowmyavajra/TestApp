@@ -4,12 +4,14 @@ import { LoginComponent } from './login/login.component';
 import { MemberInfoComponent } from './home/member-info/member-info.component';
 import { PaymentinfoComponent } from './home/payment/paymentinfo.component';
 import { RegisterComponent } from './register/register.component';
-
+import { LYPaymentComponent } from './home/LYPayment/LYPayment.component';
 const routes: Routes = [
   { path: "Login", component: LoginComponent },
   { path: "member-info", component: MemberInfoComponent },
-  { path: "payment-info", component: PaymentinfoComponent },
+  { path: "payment-info", component: PaymentinfoComponent },  
+  { path: "LYPayment", component: LYPaymentComponent },
   { path: "", component: RegisterComponent }];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

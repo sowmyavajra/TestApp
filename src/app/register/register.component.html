@@ -1,6 +1,8 @@
-<p *ngIf="_disableLink"> <a (click)="OpenRegsterForm()" href="#" style="text-decoration:solid;">Click here</a> to register before login into the application !</p>
+<h2>“Having an in-house discount plan available has helped us to maintain our new patient base of over 3,600 new patients a year with a retention rate above 97%. There is also the added bonus of additional revenue through plan sales!”</h2>
+<div style="color: rosybrown;text-align: center;"><h1>Ready to start designing your plan?</h1></div>
+<p style="text-align: center;" *ngIf="_disableLink"> <a (click)="OpenRegsterForm()" href="#" style="text-decoration:solid;">Click here</a> to register before login into the application !</p>
 
-<section class="content">
+<section class="content" style="margin-bottom: 10px;">
     <div class="container" *ngIf="_showUserRequirementsModal">
       <div class="row">       
         <div class="col-sm-8 col-sm-offset-2">

@@ -3,6 +3,7 @@ import { Login } from '../common/models';
 import { Router } from '@angular/router';
 import { Service } from '../common/service';
 import { AlertifyService } from '../common/alertify.service';
+import { CommonService } from '../common/common.service';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private service: Service, private alertify: AlertifyService
   ) { }
 
-  ngOnInit() {
-
+  ngOnInit() {   
+    debugger;
   this._login=this.service.GetRegisterDetails();
   }
   Save(form: any): boolean {
@@ -30,18 +31,17 @@ export class LoginComponent implements OnInit {
     return true;
   }
   async SecureLogin(from: any) {
+    debugger;
     if (this.Save(from)) {
       debugger;
-      this._loading = true;
-      this._login.Email = this._login.Email.trim();
-      this._login.Password = this._login.Password.trim();
+      this._loading = true;     
       debugger;
       await this.MemberLogin(this._login);
       this._loading = false;
     }
   }
   async MemberLogin(data: Login) {
-
+debugger;
     await this.service.Login(data).then(
       success => {
         debugger;
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         }
         else if (success["Success"] == "true") {          
           this.alertify.success("login successfull.");
-          this.router.navigate(['/payment-info']);
+          this.router.navigate(['/LYPayment']);          
           this._loading = false;
         }
       },
