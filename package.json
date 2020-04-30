@@ -22,7 +22,7 @@
     "alertifyjs": "^1.13.1",
     "bootstrap": "^4.4.1",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ngx-bootstrap": "^3.0.1",
     "ngx-loading": "^8.0.0",
     "rxjs": "~6.4.0",
